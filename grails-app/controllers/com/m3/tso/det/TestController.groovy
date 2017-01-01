@@ -37,7 +37,7 @@ class TestController {
 					jsonData.response[i]=["name":employees[i][0],"asso_type":employees[i][1]]
 				}
 			}
-
+//associate of manish kumar sing
 			else if(inputData.matches(Pattern.compile("(.*)(associate)(.*)(of)(.*)")))
 			{
 				println"Showing data for: "+inputData.split("of ")[1]
@@ -71,7 +71,7 @@ class TestController {
 				}
 			}
 
-
+//target of manish kumar sing
 			else if(inputData.matches(Pattern.compile("(.*)(target|achievement)(.*)(of)(.*)")))
 			{
 				employees=listTarget(inputData.split("of ")[1].trim());
@@ -87,6 +87,8 @@ class TestController {
 					jsonData.response[i]=employees[i]
 				}
 			}
+			
+			
 			//my/mine performance
 			else if(inputData.matches(Pattern.compile("(.*)(my|mine)(.*)(performance)(.*)")))
 			{
@@ -101,30 +103,34 @@ class TestController {
 					"response":[employees]];
 
 			}
-			//Show performance manish kumar singh
-			else if(inputData.matches(Pattern.compile("(.*)(performance)(.*)(of)(.*)"))  )
-			{
+		
+			else if(inputData.matches(Pattern.compile("(.*)(performance of)(.*)")))
+			{//Sales performance of agra for chek
 				if(inputData.matches(Pattern.compile("(.*)(sales performance of)(.*)")))
-				{println "testing" + inputData.split("for ")[1].trim() +"    , "+inputData.substring(inputData.indexOf("of ") + 2, inputData.indexOf("for ")).trim()
-				employees=listsalesperformance(inputData.split("for ")[1].trim(),inputData.substring(inputData.indexOf("of ") + 2, inputData.indexOf("for ")).trim());
-				type=8;
-				repeat=0;
-				jsonData=[
-					"type":type,
-					"repeat":repeat,
-					"text":"Showing Sales performance for " +inputData.split("for ")[1].trim(),
-					"response":[employees]];}
-				else{
-				println"Showing data for: "+inputData.split("of ")[1]
-				employees=listPerformance(inputData.split("of ")[1].trim());
-				type=5;
-				repeat=0;
-				jsonData=[
-					"type":type,
-					"repeat":repeat,
-					"text":"Perfomance of " +inputData.split("of ")[1].trim()+" is:",
-					"response":[employees]];
+				{
+					println "testing" + inputData.split("for ")[1].trim() +"    , "+inputData.substring(inputData.indexOf("of ") + 2, inputData.indexOf("for ")).trim()
+					employees=listsalesperformance(inputData.split("for ")[1].trim(),inputData.substring(inputData.indexOf("of ") + 2, inputData.indexOf("for ")).trim());
+					type=8;
+					repeat=0;
+					jsonData=[
+						"type":type,
+						"repeat":repeat,
+						"text":"Showing Sales performance for " +inputData.split("for ")[1].trim(),
+						"response":[employees]]
 				}
+				else
+				{
+				println"Showing data for: "+inputData.split("of ")[1].trim()
+					employees=listPerformance(inputData.split("of ")[1].trim());
+					type=5;
+					repeat=0;
+					jsonData=[
+						"type":type,
+						"repeat":repeat,
+						"text":"Performance of " +inputData.split("of ")[1].trim()+" is:",
+						"response":[employees]];
+				
+			}
 			}
 			//Show skill point/ incentive of manish kumar singh
 			else if(inputData.matches(Pattern.compile("(.*)(incentive|skill point)(.*)(of)(.*)")))
@@ -140,6 +146,8 @@ class TestController {
 					"response":employees];
 
 			}
+			
+			
 			//my skill point/incentive
 			else if(inputData.matches(Pattern.compile("(.*)(my|mine)(.*)(incentive|skill point)(.*)")))
 			{
@@ -153,36 +161,21 @@ class TestController {
 					"response":employees];
 
 			}
-			//Sales potential of Bagalkot
-			else if(inputData.matches(Pattern.compile("(.*)(sales potential of)(.*)")))
+			
+			
+			//Sale potential of Bagalkot
+			else if(Pattern.compile("(.*)(sales potential of)(.*)"))
 			{
-				println"Showing Sales Potential of "+inputData.split("of ")[1].trim()
 				employees=listPotential(inputData.split("of ")[1].trim());
-				type=7;
-				repeat=0;
-				jsonData=[
-					"type":type,
-					"repeat":repeat,
-					"text":"Showing Sales Potential of " +inputData.split("of ")[1].trim(),
-					"response":[employees]];
+					type=7;
+					repeat=0;
+					jsonData=[
+						"type":type,
+						"repeat":repeat,
+						"text":"Showing Sales potential for " +inputData.split("of ")[1].trim(),
+						"response":employees];
 			}
-
-
-			//Sales performance of agra for chek 
-			else if(inputData.matches(Pattern.compile("(.*)(sales performance of)(.*)")))
-			{
-				println "testing" + inputData.split("for ")[1].trim() +"    , "+inputData.substring(inputData.indexOf("of ") + 2, inputData.indexOf("for ")).trim()
-				employees=listsalesperformance(inputData.split("for ")[1].trim(),inputData.substring(inputData.indexOf("of ") + 2, inputData.indexOf("for ")).trim());
-				type=8;
-				repeat=0;
-				jsonData=[
-					"type":type,
-					"repeat":repeat,
-					"text":"Showing Sales performance for " +inputData.split("for ")[1].trim(),
-					"response":[employees]];
-			}
-
-
+			
 			//show villages of goa whose population is greater than 5000
 			else if(inputData.matches(Pattern.compile("(.*)(village|place|town|city)(.*)(population)(.*)(greater than)(.*)")))
 			{
@@ -197,8 +190,22 @@ class TestController {
 					"text":"Showing Population  for "+inputData.substring(inputData.indexOf("of")+2 , inputData.indexOf("whose")).trim()+ " with greater than "+inputData.split("greater than")[1].trim(),
 					"response":employees];
 			}
-
-
+			
+			
+			//Market Coverage of " State or District Name "
+			else if(inputData.matches(Pattern.compile("(.*)(market coverage of)(.*)")))
+			{
+				println"Market Coverage of "+inputData.split("of")[1].trim()
+				employees=listmarketcoverage(inputData.split("of")[1].trim());
+				//employees=listgreaterPopulation("kerala",20000);
+				type=10;
+				repeat=0;
+				jsonData=[
+					"type":type,
+					"repeat":repeat,
+					"text":"Market Coverage of "+inputData.split("of")[1].trim(),
+					"response":[employees]];
+			}
 
 			else
 			{
@@ -385,7 +392,7 @@ FROM aidb.ujl_town_mastr    ujl_town_mastr
         ON (ujl_town_mastr.state_id = ujl_state_mastr.state_id)
 WHERE     (ujl_town_mastr.town_popltn > :town_popltn)
       AND (ujl_state_mastr.state_name like :state_name)"""
-		
+
 		UjlStateMastr.withSession { session ->
 
 			def qu4=session.createSQLQuery(query)
@@ -461,6 +468,28 @@ FROM (ujlpocdb.ujl_sales_dtls    ujl_sales_dtls
 		}
 		return jsonData
 	}
+	//Function for market coverage
+	def listmarketcoverage(city)
+	{//TODO
+		def jsonData=[]
+		def targetList=[]
+		String query="""select lat_val,lng_val from ujl_state_mastr where state_name like :state_name"""
+
+		UjlStcstpntTypeMastr.withSession { session ->
+
+			def qu4=session.createSQLQuery(query)
+			qu4.setParameter("state_name",city+"%")
+			targetList=qu4.list();
+
+		}
+		if(targetList.size!=null)
+		{
+			jsonData=["lat_val":targetList[0][0],"lng_val":targetList[0][1]]
+		}
+		return jsonData
+
+	}
+
 	//Function for testing regex expression
 	def tests()
 	{
@@ -475,5 +504,10 @@ FROM (ujlpocdb.ujl_sales_dtls    ujl_sales_dtls
 			println "No Found"
 		}
 	}
-
+def temp()
+{
+	def a="Haresh"
+	println a
+	
+	}
 }
