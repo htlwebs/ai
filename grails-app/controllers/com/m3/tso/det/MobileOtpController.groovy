@@ -123,11 +123,12 @@ class MobileOtpController {
 			//to add auth key in otp master table
 			TsoOtpMastr.executeUpdate("update TsoOtpMastr set authkey = ? where usrEmpCd = ?",[obj.getAuthkey(), params.empcode])
 			//jsonData=[]
-			jsonData = ["verify_otp":1,"authkey":obj.getAuthkey(),"image":logoImage(),"cmpy_name":"Map My Marketing"]
+			jsonData = ["verify_otp":1,"authkey":obj.getAuthkey(),"image":logoImage(),"cmpy_name":"Jyothy Laboratories"]
 			render jsonData as JSON;
 		}
 		catch (Exception e)
 		{
+			println "Error in verifyOTP : ${e}"
 			jsonData = ["verify_otp":0,"authkey":""]
 			render jsonData as JSON;
 		}
@@ -145,18 +146,25 @@ class MobileOtpController {
 		String oo=obj.getOtpGen().toString()
 
 		empmobile="91"+(empmobile).toString()
-		//try{
-		def url = "https://www.txtguru.in"
-		def path = "/imobile/api.php"
-		def query = [ username: "jyothycom", password: "22298994", source: "OTP",dmobile: "${empmobile}",message: "Your OTP For Reg. ${oo}"]
+		try{
+			def url = "https://www.txtguru.in"
+			def path = "/imobile/api.php"
+			def query = [ username: "jyothycom", password: "22298994", source: "OTP",dmobile: "${empmobile}",message: "Your OTP For Reg. ${oo}"]
 
-		// Submit a request via GET
-		def response = ApiConsumerController.getText(url, path, query)
-		println "Resp:"+response;
+			// Submit a request via GET
+			def response = ApiConsumerController.getText(url, path, query)
+			println "Resp:"+response;
 
 
-		jsonData = ["validate_usr_emp_cd":1,  "validate_usr_moble_no":1]
-		render jsonData as JSON;
+			jsonData = ["validate_usr_emp_cd":1,  "validate_usr_moble_no":1]
+			render jsonData as JSON;
+		}
+		catch(Exception e)
+		{
+			println "Error in resendOTP() : ${e}"
+			jsonData = ["validate_usr_emp_cd":0,  "validate_usr_moble_no":0]
+			render jsonData as JSON;
+		}
 	}
 
 
@@ -200,7 +208,8 @@ class MobileOtpController {
 	//Function to return logo in string(base64)
 	def logoImage()
 	{
-		File  file= new File("ailogo.png")
+		String path=request.getSession().getServletContext().getRealPath("/") + "ailogo.png"
+		File  file= new File(path)
 		// Reading a Image file from file system
 		FileInputStream imageInFile = new FileInputStream(file);
 		byte[] imageData = new byte[(int)file.length()];

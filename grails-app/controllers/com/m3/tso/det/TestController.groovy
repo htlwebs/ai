@@ -223,7 +223,7 @@ FROM tso_usr_type_mastr    tso_usr_type_mastr
 			emp_list=qu4.list();
 
 		}
-		if(emp_list!=null)
+		if(emp_list!=[])
 		{
 			jsonData=[
 			"type":3,
@@ -266,7 +266,7 @@ WHERE tso_usr_mastr.reprtng_usr_id= (SELECT tso_usr_mastr.usr_id FROM tso_usr_ma
 		}
 		//println"Showing data for: "+inputData.split("of ")[1]
 			
-		if(emp_list!=null)	
+		if(emp_list!=[])	
 			{jsonData=[
 					"type":3,
 					"repeat":0,
@@ -420,8 +420,8 @@ WHERE (tso_usr_mastr.usr_name like :usr_name) AND (tso_usr_mastr.reprtng_usr_id=
        ujl_town_mastr.lat_val,
        ujl_town_mastr.lng_val,
        ujl_state_mastr.state_name
-FROM aidb.ujl_town_mastr    ujl_town_mastr
-     INNER JOIN aidb.ujl_state_mastr ujl_state_mastr
+FROM ujlpocdb.ujl_town_mastr    ujl_town_mastr
+     INNER JOIN ujlpocdb.ujl_state_mastr ujl_state_mastr
         ON (ujl_town_mastr.state_id = ujl_state_mastr.state_id)
 WHERE     (ujl_town_mastr.town_popltn > :town_popltn)
       AND (ujl_state_mastr.state_name like :state_name)"""
@@ -452,7 +452,7 @@ WHERE     (ujl_town_mastr.town_popltn > :town_popltn)
 		def targetList=[]
 		def jsonData=[]
 
-		String query="""select distrct_name,lat_val,lng_val,rural_mpv_val,urban_mpv_val,rural_mpv_grade,urban_mpv_grade from ujl_distrct_mastr where distrct_name like :distrct_name"""
+		String query="""select distrct_name,lat_val,lng_val,rural_mpv_val,urban_mpv_val,rural_mpv_grade,urban_mpv_grade from ujlpocdb.ujl_distrct_mastr where distrct_name like :distrct_name"""
 		UjlStcstpntTypeMastr.withSession { session ->
 
 			def qu4=session.createSQLQuery(query)
@@ -464,6 +464,7 @@ WHERE     (ujl_town_mastr.town_popltn > :town_popltn)
 		{
 			jsonData=["distrct_name":targetList[0][0],"lat_val":targetList[0][1],"lng_val":targetList[0][2],"rural_mpv_val":targetList[0][3],"urban_mpv_val":targetList[0][4],"rural_mpv_grade":targetList[0][5],"urban_mpv_grade":targetList[0][6]	]
 		}
+		
 		return jsonData
 	}
 
@@ -479,10 +480,10 @@ WHERE     (ujl_town_mastr.town_popltn > :town_popltn)
        ujl_brand_mastr.brand_name,
        ujl_sales_dtls.month,
        ujl_sales_dtls.year
-FROM (ujl_sales_dtls    ujl_sales_dtls
-      INNER JOIN ujl_brand_mastr ujl_brand_mastr
+FROM (ujlpocdb.ujl_sales_dtls    ujl_sales_dtls
+      INNER JOIN ujlpocdb.ujl_brand_mastr ujl_brand_mastr
          ON (ujl_sales_dtls.brand_id = ujl_brand_mastr.brand_id))
-     INNER JOIN ujl_stcstpnt_mastr ujl_stcstpnt_mastr
+     INNER JOIN ujlpocdb.ujl_stcstpnt_mastr ujl_stcstpnt_mastr
         ON (ujl_sales_dtls.stcstpnt_id = ujl_stcstpnt_mastr.stcstpnt_id)
         WHERE ujl_brand_mastr.brand_name like :brand_name AND ujl_stcstpnt_mastr.cens_city_name like :cens_city_name
         GROUP BY ujl_brand_mastr.brand_name,ujl_stcstpnt_mastr.cens_city_name"""
@@ -506,7 +507,7 @@ FROM (ujl_sales_dtls    ujl_sales_dtls
 	{
 		def jsonData=[]
 		def targetList=[]
-		String query="""select lat_val,lng_val from ujl_state_mastr where state_name like :state_name"""
+		String query="""select lat_val,lng_val from ujlpocdb.ujl_state_mastr where state_name like :state_name"""
 
 		UjlStcstpntTypeMastr.withSession { session ->
 

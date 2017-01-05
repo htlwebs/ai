@@ -2,7 +2,7 @@ environments {
     development {
         dataSource {
             dbCreate = "none"
-            url = "jdbc:mysql://localhost/aidb"
+            url = "jdbc:mysql://localhost/tsodb"
             driverClassName = "com.mysql.jdbc.Driver"
             username = "root"
             password = "pass"
@@ -28,7 +28,7 @@ environments {
     test {
         dataSource {
             dbCreate = "update"
-            url = "jdbc:mysql://localhost/aidb"
+            url = "jdbc:mysql://localhost/tsodb"
             driverClassName = "com.mysql.jdbc.Driver"
             username = "root"
             password = "ikyaSql"
@@ -38,10 +38,10 @@ environments {
     production {
         dataSource {
             dbCreate = "none"
-            url = "jdbc:mysql://localhost:3306/aidb"
+            url = "jdbc:mysql://localhost:3306/tsodb"
             driverClassName = "com.mysql.jdbc.Driver"
             username = "root"
-            password = "pass"
+            password = "m3Sp#7982"
             dialect = org.hibernate.dialect.MySQL5InnoDBDialect
             properties {
                 maxActive = 50
