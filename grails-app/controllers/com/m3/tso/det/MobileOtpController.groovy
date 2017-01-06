@@ -123,7 +123,7 @@ class MobileOtpController {
 			//to add auth key in otp master table
 			TsoOtpMastr.executeUpdate("update TsoOtpMastr set authkey = ? where usrEmpCd = ?",[obj.getAuthkey(), params.empcode])
 			//jsonData=[]
-			jsonData = ["verify_otp":1,"authkey":obj.getAuthkey(),"image":logoImage(),"cmpy_name":"Jyothy Laboratories"]
+			jsonData = ["verify_otp":1,"authkey":obj.getAuthkey(),"image":logoImage(),"cmpy_name":"Demo Company"]
 			render jsonData as JSON;
 		}
 		catch (Exception e)
