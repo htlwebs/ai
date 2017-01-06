@@ -41,7 +41,7 @@ environments {
             url = "jdbc:mysql://localhost:3306/tsodb"
             driverClassName = "com.mysql.jdbc.Driver"
             username = "root"
-            password = "m3Sp#7982"
+            password = "pass"
             dialect = org.hibernate.dialect.MySQL5InnoDBDialect
             properties {
                 maxActive = 50
